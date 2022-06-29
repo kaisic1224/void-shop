@@ -19,7 +19,7 @@ const Home: NextPage = () => {
       <main className='px-8'>
         <section className='grid grid-cols-2 min-h-screen'>
           <div className='mt-[15vh]'>
-            suck my dick bitch
+            kAKKERSKAKRKERSKKARKKERKRES
             {/* <Image
               src={"/blink.gif"}
               width={400}
