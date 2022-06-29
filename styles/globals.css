@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.a {
+  color: #111111;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@layer components {
+  .nav-tooltip {
+    @apply absolute top-1/2 -translate-y-1/2 -right-full translate-x-full bg-black-dull shadow-md min-w-max w-auto
+    scale-0 transition-transform delay-200 px-[.4em] py-[.2em] rounded-md origin-left select-none;
+  }
+
+  .nav-item {
+    @apply relative hover:bg-black-accent rounded-md z-40 cursor-pointer
+    after:absolute after:w-[calc(100%_+_.35rem)] after:h-[calc(100%_+_.35rem)] active:after:bg-black-base/40
+    after:top-1/2 after:left-1/2 after:-translate-x-1/2 after:-translate-y-1/2 after:rounded-md after:z-50 after:pointer-events-none;
+  }
+
+  .nav-icon {
+    @apply w-5 h-5;
+  }
+}
