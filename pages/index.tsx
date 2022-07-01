@@ -52,7 +52,7 @@ const Home: NextPage = () => {
 
       <main className='px-8'>
         <section className='grid grid-cols-2 min-h-screen'>
-          <div className='mt-[15vh]'>suck my dick bitch</div>
+          <div className='mt-[15vh]'>kkkkkasdwasdwasdaasd</div>
           {/* <LandingTitle /> */}
         </section>
         <section className='mt-[25vh] text-center'>
