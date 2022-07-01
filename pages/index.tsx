@@ -1,9 +1,41 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
-import Contact from "../components/Contact";
+import Contact, { fadeinUp } from "../components/Contact";
 import LandingTitle from "../components/LandingTitle";
 import { motion } from "framer-motion";
+import { FaTiktok } from "react-icons/fa";
+import { AiOutlineInstagram } from "react-icons/ai";
+
+const socials = [
+  {
+    href: "https://www.tiktok.com/@voidreincarnation",
+    icon: <FaTiktok className='w-6 h-6' />
+  },
+  {
+    href: "https://www.instagram.com/voidreincarnation/",
+    icon: <AiOutlineInstagram className='w-6 h-6' />
+  }
+];
+
+const circleVars = {
+  hidden: {
+    pathLength: 0,
+    opacity: 0
+  },
+  show: {
+    pathLength: 1,
+    opacity: 1,
+    transition: {
+      pathLength: {
+        duration: 0.6
+      },
+      opacity: {
+        duration: 0.6
+      }
+    }
+  }
+};
 
 const Home: NextPage = () => {
   return (
@@ -14,28 +46,70 @@ const Home: NextPage = () => {
         <link rel='icon' href='/favicon.ico' />
       </Head>
 
-      <header></header>
+      <header className='px-8'>
+        <LandingTitle />
+      </header>
 
       <main className='px-8'>
         <section className='grid grid-cols-2 min-h-screen'>
-          <div className='mt-[15vh]'>
-            kAKKERSKAKRKERSKKARKKERKRES
-            {/* <Image
-              src={"/blink.gif"}
-              width={400}
-              height={400}
-              objectFit={"cover"}
-            /> */}
-          </div>
+          <div className='mt-[15vh]'>suck my dick bitch</div>
           {/* <LandingTitle /> */}
+        </section>
+        <section className='mt-[25vh] text-center'>
+          <motion.h2 className='text-red-accent font-bold text-2xl'>
+            こんにちは
+          </motion.h2>
+          <motion.p transition={fadeinUp}>
+            Every piece goes through a journey made by hand. No piece of your
+            clothing will have rivaled care — <br />
+            unless it is made by VOID.
+          </motion.p>
         </section>
       </main>
 
-      <footer className='px-8'>
-        <Contact />
-        <motion.div className='relative'>
-          <motion.div className='' />
+      <footer className='px-8 min-h-screen'>
+        <motion.div className='fixed left-8 top-2/3'>
+          <motion.div className='h-[125%] w-px absolute bg-red-accent -right-4 top-1/2 -translate-y-1/2' />
+          <div className='flex flex-col gap-4'>
+            {socials.map((social) => (
+              <motion.div
+                key={social.href}
+                initial='hidden'
+                whileHover='show'
+                className='relative rounded-full w-fit aspect-square isolate'
+              >
+                <svg
+                  className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10'
+                  width={50}
+                  height={50}
+                  xmlns='http://www.w3.org/2000/svg'
+                  version='1.1'
+                >
+                  <motion.circle
+                    variants={circleVars}
+                    cy={25}
+                    cx={25}
+                    r='20'
+                    stroke='white'
+                    stroke-width='3'
+                  />
+                  <motion.circle
+                    variants={circleVars}
+                    cy={25}
+                    cx={25}
+                    r='19'
+                    stroke='red'
+                    stroke-width='2'
+                  />
+                </svg>
+                <a href={social.href} className='z-50' target='_blank'>
+                  {social.icon}
+                </a>
+              </motion.div>
+            ))}
+          </div>
         </motion.div>
+        <Contact />
       </footer>
     </>
   );

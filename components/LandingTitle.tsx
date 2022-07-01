@@ -1,21 +1,18 @@
 import { Canvas } from "@react-three/fiber";
 import { motion as motion3d } from "framer-motion-3d";
-import { motion } from "framer-motion";
 
 const LandingTitle = () => {
   return (
-    <div>
-      <h1 className='uppercase flex flex-col'>
-        <span className=''>VØID</span>
-        <span className=''>Reincarnation</span>
-      </h1>
-      <Canvas>
-        <motion3d.mesh>
-          <boxGeometry args={[10, 36, 3]} />
-          <meshDepthMaterial color='#' />
-        </motion3d.mesh>
-      </Canvas>
-    </div>
+    <Canvas
+      resize={{ offsetSize: true }}
+      dpr={[1, 2]}
+      camera={{ position: [0, 0, 5.5], fov: 45 }}
+    >
+      <motion3d.mesh>
+        <boxGeometry args={[32, 32, 32]} />
+        <meshDepthMaterial color='white' />
+      </motion3d.mesh>
+    </Canvas>
   );
 };
 export default LandingTitle;

@@ -1,12 +1,17 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Sidebar from "../components/Sidebar";
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const [offset, setOffset] = useState(0);
+  useEffect(() => {
+    if (open) {
+      document.body.style.top = `-${offset}px`;
+    }
+  }, [open]);
   return (
     <>
       <Sidebar
@@ -17,9 +22,9 @@ function MyApp({ Component, pageProps }: AppProps) {
       />
 
       <motion.main
-        className={`bg-black-dull ${
-          open ? `max-h-screen overflow-hidden top-[${offset}px]` : ""
-        } transition-transform`}
+        className={`bg-black-dull transition-transform ${
+          open ? `overflow-hidden max-h-screen` : ""
+        }`}
         style={
           open
             ? {

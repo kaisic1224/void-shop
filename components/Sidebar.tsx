@@ -1,4 +1,5 @@
 import { AnimatePresence, motion } from "framer-motion";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { Dispatch, SetStateAction, useRef, useState } from "react";
@@ -11,20 +12,39 @@ const navigation = [
     name: "Home",
     path: "/",
     component: (
-      <BsFillHouseDoorFill className='nav-icon group-hover:opacity-80' />
+      <BsFillHouseDoorFill className={`nav-icon group-hover:opacity-80`} />
     )
   },
   {
     name: "Apparel",
     path: "/store",
-    component: <FaTshirt className='nav-icon group-hover:opacity-80' />
+    component: <FaTshirt className={`nav-icon group-hover:opacity-80`} />
   },
   {
     name: "Contact",
     path: "/#contact",
-    component: <MdMail className='nav-icon group-hover:opacity-80' />
+    component: <MdMail className={`nav-icon group-hover:opacity-80`} />
   }
 ];
+
+const scytheVars = {
+  hidden: {
+    rotate: 180
+  },
+  show: {
+    rotate: 0,
+    transition: {
+      ease: "easeOut"
+    }
+  },
+  hover: {
+    rotate: -45,
+    transition: {
+      duration: 3
+    }
+  }
+};
+
 const Sidebar = ({
   open,
   setOpen,
@@ -41,15 +61,28 @@ const Sidebar = ({
   const router = useRouter();
   return (
     <>
-      <div
-        onClick={() => {
-          setOpen(!open);
-          setOffset(window.scrollY);
-        }}
-        className={`fixed top-2 left-2 ${visibility ? "" : "hidden"}`}
-      >
-        open me
-      </div>
+      {visibility && (
+        <motion.div
+          variants={scytheVars}
+          initial='hidden'
+          animate='show'
+          whileTap='hidden'
+          whileHover='hover'
+          onTapStart={() => {
+            setOffset(window.scrollY);
+            setOpen(!open);
+          }}
+          className={`fixed top-2 left-2 select-none`}
+        >
+          <Image
+            className='cursor-pointer'
+            src='/scythe.png'
+            width={40}
+            height={40}
+            objectFit='cover'
+          />
+        </motion.div>
+      )}
       <div
         ref={bgRef}
         onClick={(e) => {
@@ -57,7 +90,9 @@ const Sidebar = ({
           window.scrollTo(0, offset);
         }}
         className={`fixed inset-0 transition-colors duration-300 z-[900] ${
-          open ? "bg-black/40" : "bg-transparent pointer-events-none"
+          open
+            ? "bg-black/40 select-none"
+            : "bg-transparent pointer-events-none"
         }`}
       >
         <AnimatePresence>
@@ -71,7 +106,7 @@ const Sidebar = ({
               className='p-4 bg-black absolute min-h-screen z-[999]'
             >
               <ul
-                className='flex flex-col items-center gap-6 bg-black-dull text-white px-4 py-8
+                className='flex flex-col items-center gap-2 bg-black-dull text-white px-4 py-8
              rounded-md'
               >
                 {navigation.map((nav) => (

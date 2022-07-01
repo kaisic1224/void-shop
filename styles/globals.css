@@ -18,11 +18,16 @@ html {
 
   .nav-item {
     @apply relative hover:bg-black-accent rounded-md z-40 cursor-pointer
-    after:absolute after:w-[calc(100%_+_.35rem)] after:h-[calc(100%_+_.35rem)] active:after:bg-black-base/40
+    after:absolute after:w-[calc(100%_+_.35rem)] after:h-[calc(100%_+_.35rem)] focus-within:after:bg-black-base/40 focus-within:bg-black-accent
     after:top-1/2 after:left-1/2 after:-translate-x-1/2 after:-translate-y-1/2 after:rounded-md after:z-50 after:pointer-events-none;
   }
 
   .nav-icon {
     @apply w-5 h-5;
+  }
+
+  .text-form {
+    @apply bg-transparent transition-colors focus:outline-none border-b-2 border-b-black-base pb-1 focus:border-b-red-dull
+    focus:placeholder:text-transparent;
   }
 }
