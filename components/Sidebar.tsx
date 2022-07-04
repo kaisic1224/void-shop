@@ -29,7 +29,7 @@ const navigation = [
 
 const scytheVars = {
   hidden: {
-    rotate: 180
+    rotate: 140
   },
   show: {
     rotate: 0,
@@ -72,7 +72,7 @@ const Sidebar = ({
             setOffset(window.scrollY);
             setOpen(!open);
           }}
-          className={`fixed top-2 left-2 select-none`}
+          className={`fixed top-2 left-2 select-none z-[899]`}
         >
           <Image
             className='cursor-pointer'

@@ -1,18 +1,36 @@
-import { Canvas } from "@react-three/fiber";
-import { motion as motion3d } from "framer-motion-3d";
+import { Canvas, useFrame } from "@react-three/fiber";
+import { motion as motion3 } from "framer-motion-3d";
+import { useRef } from "react";
+import {
+  OrbitControls,
+  ScrollControls,
+  Scroll,
+  MeshReflectorMaterial,
+  Stars
+} from "@react-three/drei";
 
 const LandingTitle = () => {
   return (
-    <Canvas
-      resize={{ offsetSize: true }}
-      dpr={[1, 2]}
-      camera={{ position: [0, 0, 5.5], fov: 45 }}
-    >
-      <motion3d.mesh>
-        <boxGeometry args={[32, 32, 32]} />
-        <meshDepthMaterial color='white' />
-      </motion3d.mesh>
+    <Canvas>
+      <ambientLight intensity={0.5} />
+      <OrbitControls />
+      <Stars count={5000} radius={1} depth={2} />
+      <pointLight position={[10, 5, 15]} color='yellow' />
+      <directionalLight position={[-2, 0, 4]} color='hotpink' />
+      <motion3.mesh position={[0, 0, -4]}>
+        <icosahedronBufferGeometry args={[2, 0]} />
+        <MeshReflectorMaterial mirror={1} attach='material' />
+      </motion3.mesh>
+      <Grid />
     </Canvas>
   );
+
+  function Grid() {
+    return (
+      <motion3.mesh position={[0, -2, 0]}>
+        <gridHelper args={[100, 20]} />
+      </motion3.mesh>
+    );
+  }
 };
 export default LandingTitle;

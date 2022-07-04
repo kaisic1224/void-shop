@@ -1,5 +1,8 @@
+import { Float, MeshReflectorMaterial, OrbitControls } from "@react-three/drei";
+import { Canvas } from "@react-three/fiber";
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { motion as motion3 } from "framer-motion-3d";
 
 export const fadeinUp = {
   duration: 0.6,
@@ -34,7 +37,21 @@ const Contact = () => {
   return (
     <>
       <motion.div id='contact' className='grid grid-cols-2'>
-        <div></div>
+        <div>
+          <Canvas>
+            <ambientLight intensity={0.5} />
+            <directionalLight
+              position={[10, 10, 15]}
+              color='lightblue'
+              intensity={1}
+            />
+            <OrbitControls />
+            <Float>
+              <Scumbag position={[1, 1, -2]} />
+            </Float>
+            <Plane />
+          </Canvas>
+        </div>
         <div>
           <motion.h2
             initial={{ y: 100, opacity: 0 }}
@@ -50,7 +67,7 @@ const Contact = () => {
             initial='hidden'
             whileInView='show'
             viewport={{ once: true }}
-            className='flex flex-col'
+            className='flex flex-col mt-2'
           >
             <div className='flex gap-4 w-full'>
               <motion.input
@@ -85,9 +102,46 @@ const Contact = () => {
               className='text-form resize-none mt-4 overflow-y-hidden'
             />
           </motion.form>
+          or support email:{" "}
+          <a
+            href='mailto:VR@shop-void.com'
+            className='underline hover:no-underline'
+          >
+            VR@shop-void.com
+          </a>
         </div>
       </motion.div>
     </>
   );
 };
+
+const Plane = () => {
+  return (
+    <mesh position={[0, -1, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+      <planeBufferGeometry args={[100, 100]} />
+      <MeshReflectorMaterial
+        mirror={1}
+        blur={[400, 100]}
+        mixStrength={10}
+        color='#101010'
+        depthScale={15}
+      />
+    </mesh>
+  );
+};
+
+const Scumbag = (props: any) => {
+  const [hover, setHover] = useState(false);
+  return (
+    <motion3.mesh
+      onPointerOver={() => setHover(true)}
+      onPointerLeave={() => setHover(false)}
+      {...props}
+    >
+      <torusBufferGeometry />
+      <meshStandardMaterial color={hover ? "limegreen" : "aquamarine"} />
+    </motion3.mesh>
+  );
+};
+
 export default Contact;

@@ -30,4 +30,8 @@ html {
     @apply bg-transparent transition-colors focus:outline-none border-b-2 border-b-black-base pb-1 focus:border-b-red-dull
     focus:placeholder:text-transparent;
   }
+
+  .social-icons {
+    @apply w-6 h-6 group-hover:opacity-[85%];
+  }
 }

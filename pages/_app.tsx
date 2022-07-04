@@ -7,11 +7,7 @@ import Sidebar from "../components/Sidebar";
 function MyApp({ Component, pageProps }: AppProps) {
   const [open, setOpen] = useState(false);
   const [offset, setOffset] = useState(0);
-  useEffect(() => {
-    if (open) {
-      document.body.style.top = `-${offset}px`;
-    }
-  }, [open]);
+
   return (
     <>
       <Sidebar
@@ -23,7 +19,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
       <motion.main
         className={`bg-black-dull transition-transform ${
-          open ? `overflow-hidden max-h-screen` : ""
+          open ? `overflow-hidden` : ""
         }`}
         style={
           open

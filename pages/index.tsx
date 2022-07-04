@@ -6,15 +6,16 @@ import LandingTitle from "../components/LandingTitle";
 import { motion } from "framer-motion";
 import { FaTiktok } from "react-icons/fa";
 import { AiOutlineInstagram } from "react-icons/ai";
+import { Canvas } from "@react-three/fiber";
 
 const socials = [
   {
     href: "https://www.tiktok.com/@voidreincarnation",
-    icon: <FaTiktok className='w-6 h-6' />
+    icon: <FaTiktok className='social-icons' />
   },
   {
     href: "https://www.instagram.com/voidreincarnation/",
-    icon: <AiOutlineInstagram className='w-6 h-6' />
+    icon: <AiOutlineInstagram className='social-icons' />
   }
 ];
 
@@ -37,6 +38,15 @@ const circleVars = {
   }
 };
 
+//name
+//interact
+//questions
+//gotoshop
+
+//layout orgraphthigc cam
+// make logo eye blink faster as you scroll until black washes over screen from bottom,
+// then banner announcing next drop shows up and other stuff //layout orgpothpirc cam
+
 const Home: NextPage = () => {
   return (
     <>
@@ -46,14 +56,16 @@ const Home: NextPage = () => {
         <link rel='icon' href='/favicon.ico' />
       </Head>
 
-      <header className='px-8'>
-        <LandingTitle />
+      <header className='px-8 min-h-screen flex items-center justify-center'>
+        <div className='grid grid-cols-2 items-center'>
+          <LandingTitle />
+          <h1>VØID REINCARNATION</h1>
+        </div>
       </header>
 
       <main className='px-8'>
         <section className='grid grid-cols-2 min-h-screen'>
-          <div className='mt-[15vh]'>kkkkkasdwasdwasdaasd</div>
-          {/* <LandingTitle /> */}
+          <div className='mt-[15vh]'>KAKWAKAWAKKWAKWKAWKKAW</div>
         </section>
         <section className='mt-[25vh] text-center'>
           <motion.h2 className='text-red-accent font-bold text-2xl'>
@@ -68,47 +80,59 @@ const Home: NextPage = () => {
       </main>
 
       <footer className='px-8 min-h-screen'>
-        <motion.div className='fixed left-8 top-2/3'>
-          <motion.div className='h-[125%] w-px absolute bg-red-accent -right-4 top-1/2 -translate-y-1/2' />
-          <div className='flex flex-col gap-4'>
+        <div className='fixed left-8 top-2/3'>
+          <motion.div
+            initial={{ height: 0 }}
+            animate={{ height: "125%" }}
+            transition={{ ...fadeinUp, delay: 0.4 }}
+            className='w-px absolute bg-red-accent -right-4 top-1/2 -translate-y-1/2'
+          />
+          <motion.ul
+            variants={{
+              show: { transition: { staggerChildren: 0.2, delayChildren: 1 } }
+            }}
+            initial='hidden'
+            animate='show'
+            className='flex flex-col gap-4'
+          >
             {socials.map((social) => (
-              <motion.div
-                key={social.href}
-                initial='hidden'
-                whileHover='show'
-                className='relative rounded-full w-fit aspect-square isolate'
+              <motion.li
+                variants={{
+                  hidden: { opacity: 0, y: 50 },
+                  show: { opacity: 1, y: 0 }
+                }}
+                transition={fadeinUp}
               >
-                <svg
-                  className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10'
-                  width={50}
-                  height={50}
-                  xmlns='http://www.w3.org/2000/svg'
-                  version='1.1'
-                >
-                  <motion.circle
-                    variants={circleVars}
-                    cy={25}
-                    cx={25}
-                    r='20'
-                    stroke='white'
-                    stroke-width='3'
-                  />
-                  <motion.circle
-                    variants={circleVars}
-                    cy={25}
-                    cx={25}
-                    r='19'
-                    stroke='red'
-                    stroke-width='2'
-                  />
-                </svg>
                 <a href={social.href} className='z-50' target='_blank'>
-                  {social.icon}
+                  <motion.div
+                    key={social.href}
+                    initial='hidden'
+                    whileHover='show'
+                    className='relative rounded-full w-fit aspect-square isolate group'
+                  >
+                    <svg
+                      className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10'
+                      width={50}
+                      height={50}
+                      xmlns='http://www.w3.org/2000/svg'
+                      version='1.1'
+                    >
+                      <motion.circle
+                        variants={circleVars}
+                        cy={25}
+                        cx={25}
+                        r='20'
+                        stroke='red'
+                        strokeWidth='2'
+                      />
+                    </svg>
+                    {social.icon}
+                  </motion.div>
                 </a>
-              </motion.div>
+              </motion.li>
             ))}
-          </div>
-        </motion.div>
+          </motion.ul>
+        </div>
         <Contact />
       </footer>
     </>
