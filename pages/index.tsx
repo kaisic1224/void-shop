@@ -56,14 +56,14 @@ const Home: NextPage = () => {
         <link rel='icon' href='/favicon.ico' />
       </Head>
 
-      <header className='px-8 min-h-screen flex items-center justify-center'>
+      <section className='px-8 min-h-screen flex items-center justify-center'>
         <div className='grid grid-cols-2 items-center'>
           <LandingTitle />
           <h1>VØID REINCARNATION</h1>
         </div>
-      </header>
+      </section>
 
-      <main className='px-8'>
+      <section className='px-8'>
         <section className='grid grid-cols-2 min-h-screen'>
           <div className='mt-[15vh]'>KAKWAKAWAKKWAKWKAWKKAW</div>
         </section>
@@ -77,7 +77,7 @@ const Home: NextPage = () => {
             unless it is made by VOID.
           </motion.p>
         </section>
-      </main>
+      </section>
 
       <footer className='px-8 min-h-screen'>
         <div className='fixed left-8 top-2/3'>

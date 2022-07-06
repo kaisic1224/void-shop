@@ -1,6 +1,5 @@
 import { Canvas, useFrame } from "@react-three/fiber";
 import Head from "next/head";
-import { motion } from "framer-motion-3d";
 import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import {
@@ -8,7 +7,8 @@ import {
   FirstPersonControls,
   OrbitControls,
   Float,
-  useTexture
+  useTexture,
+  PerspectiveCamera
 } from "@react-three/drei";
 import { LinearEncoding, type Texture } from "three";
 
@@ -19,19 +19,27 @@ const store = () => {
         <title>Shop | VØID</title>
       </Head>
 
-      <main className='min-h-screen'>
-        <Canvas camera={{ position: [0, 1, 5], fov: 50 }} shadows>
+      <section className='relative min-h-screen'>
+        <Canvas resize={{ offsetSize: true }} dpr={[1, 2]}>
           {/* <color attach='background' args={["#010203"]} /> */}
+          <PerspectiveCamera makeDefault fov={50} position={[0, 6, 0]} />
           <fog attach='fog' args={["#010203", 0, 15]} />
           <OrbitControls />
           <ambientLight args={["#0D0D0D", 1.2]} />
-          <pointLight intensity={2} color='#fc0000' position={[0, 5, 5]} />
+          <spotLight
+            intensity={2}
+            penumbra={0.5}
+            angle={0.6}
+            color='#fc0000'
+            castShadow
+            position={[0, 5, 5]}
+          />
           <Float>
-            <Torus castShadow receiveShadow position={[0, 1, -5]} />
+            <Torus position={[0, 1.5, -5]} />
           </Float>
           <Plane />
         </Canvas>
-      </main>
+      </section>
     </>
   );
 };
@@ -71,13 +79,13 @@ const Plane = () => {
     }
   );
   return (
-    <motion.mesh
+    <mesh
       position={[0, 0, 0]}
       rotation={[-Math.PI / 2, 0, 0]}
       castShadow
       receiveShadow
     >
-      <motion.planeBufferGeometry args={[50, 50]} />
+      <planeBufferGeometry args={[50, 50]} />
       <MeshReflectorMaterial
         {...textures}
         normalMap={normalTexture}
@@ -86,7 +94,7 @@ const Plane = () => {
         blur={[400, 100]}
         resolution={1024}
         mixBlur={30}
-        mixStrength={80}
+        mixStrength={90}
         mixContrast={1}
         depthScale={1}
         minDepthThreshold={0.1}
@@ -95,7 +103,7 @@ const Plane = () => {
         metalness={0.5}
         reflectorOffset={0.2}
       />
-    </motion.mesh>
+    </mesh>
   );
 };
 
@@ -103,7 +111,7 @@ const Torus = (props: any) => {
   const ref = useRef<THREE.Mesh>(null);
   const [hover, setHover] = useState(false);
   return (
-    <motion.mesh
+    <mesh
       ref={ref}
       {...props}
       onPointerEnter={() => setHover(true)}
@@ -114,7 +122,7 @@ const Torus = (props: any) => {
         attach='material'
         color={hover ? "#AC7979" : "white"}
       />
-    </motion.mesh>
+    </mesh>
   );
 };
 

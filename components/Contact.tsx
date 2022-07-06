@@ -2,7 +2,6 @@ import { Float, MeshReflectorMaterial, OrbitControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { motion as motion3 } from "framer-motion-3d";
 
 export const fadeinUp = {
   duration: 0.6,
@@ -133,14 +132,14 @@ const Plane = () => {
 const Scumbag = (props: any) => {
   const [hover, setHover] = useState(false);
   return (
-    <motion3.mesh
+    <mesh
       onPointerOver={() => setHover(true)}
       onPointerLeave={() => setHover(false)}
       {...props}
     >
       <torusBufferGeometry />
       <meshStandardMaterial color={hover ? "limegreen" : "aquamarine"} />
-    </motion3.mesh>
+    </mesh>
   );
 };
 
