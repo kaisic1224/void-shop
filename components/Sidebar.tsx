@@ -2,7 +2,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { Dispatch, SetStateAction, useRef, useState } from "react";
+import { Dispatch, memo, SetStateAction, useRef, useState } from "react";
 import { BsFillHouseDoorFill } from "react-icons/bs";
 import { FaTshirt } from "react-icons/fa";
 import { MdMail } from "react-icons/md";
@@ -110,9 +110,15 @@ const Sidebar = ({
              rounded-md'
               >
                 {navigation.map((nav) => (
-                  <li className='group nav-item' key={nav.path}>
+                  <li className='group relative' key={nav.path}>
                     <Link href={nav.path}>
-                      <a className='block p-2'>{nav.component}</a>
+                      <a
+                        className={`block p-2 nav-item ${
+                          router.pathname === nav.path && "bg-black-base"
+                        }`}
+                      >
+                        {nav.component}
+                      </a>
                     </Link>
                     <span className='nav-tooltip group-hover:scale-100'>
                       {nav.name}

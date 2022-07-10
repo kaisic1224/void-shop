@@ -2,6 +2,7 @@ import { Float, MeshReflectorMaterial, OrbitControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { HiOutlineMail } from "react-icons/hi";
 
 export const fadeinUp = {
   duration: 0.6,
@@ -33,6 +34,10 @@ const Contact = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [msg, setMsg] = useState("");
+  const [invalid, setInvalid] = useState(false);
+  const [eInvalid, seteInvalid] = useState(false);
+
+  const sendEmail = () => {};
   return (
     <>
       <motion.div id='contact' className='grid grid-cols-2'>
@@ -67,47 +72,97 @@ const Contact = () => {
             whileInView='show'
             viewport={{ once: true }}
             className='flex flex-col mt-2'
+            onSubmit={(e) => {
+              e.preventDefault();
+              if (name.length === 0 || email.length === 0 || msg.length === 0) {
+                setInvalid(true);
+                seteInvalid(true);
+              } else {
+                setInvalid(false);
+                seteInvalid(false);
+                sendEmail();
+              }
+            }}
           >
             <div className='flex gap-4 w-full'>
-              <motion.input
-                variants={vars2}
-                type='text'
-                value={name}
-                placeholder='Name'
-                onChange={(e) => setName(e.target.value)}
-                required
-                className='text-form flex-1'
-              />
-              <motion.input
-                variants={vars2}
-                placeholder='Email'
-                onChange={(e) => setEmail(e.target.value)}
-                value={email}
-                type='text'
-                required
-                className='text-form flex-1'
-              />
+              <motion.div variants={vars2} className='flex-1 relative'>
+                <input
+                  type='text'
+                  value={name}
+                  placeholder='Name'
+                  onChange={(e) => setName(e.target.value)}
+                  className='text-form'
+                />
+              </motion.div>
+              <motion.div variants={vars2} className='flex-1 relative'>
+                <input
+                  placeholder='Email'
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                    if (e.target.checkValidity()) {
+                      seteInvalid(false);
+                    } else {
+                      seteInvalid(true);
+                    }
+                  }}
+                  value={email}
+                  type='email'
+                  title='your@email.com'
+                  pattern='[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2, 4}$'
+                  className='text-form peer'
+                  onInvalid={(e) => {
+                    e.preventDefault();
+                    seteInvalid(true);
+                    setInvalid(true);
+                  }}
+                />
+                {invalid === true && eInvalid === true && (
+                  <span className={`text-red-accent `}>
+                    Must be a valid email
+                  </span>
+                )}
+              </motion.div>
             </div>
-            <motion.textarea
-              variants={vars2}
-              placeholder='Message'
-              onChange={(e) => {
-                setMsg(e.target.value);
-                e.target.style.height = "auto";
-                e.target.style.height = e.target.scrollHeight + "px";
+            <motion.div variants={vars2}>
+              <textarea
+                placeholder='Message'
+                onChange={(e) => {
+                  setMsg(e.target.value);
+                  e.target.style.height = "auto";
+                  e.target.style.height = e.target.scrollHeight + "px";
+                }}
+                value={msg}
+                className='text-form resize-none mt-4 overflow-y-hidden peer'
+              />
+              {invalid && (
+                <span
+                  className={`text-red-accent peer-focus:hidden ${
+                    msg.length != 0 && "hidden"
+                  }`}
+                >
+                  Message field <strong>cannot</strong> be left blank
+                </span>
+              )}
+            </motion.div>
+            <motion.input
+              variants={{
+                hidden: { opacity: 0 },
+                show: { opacity: 1, transition: { delay: 1.5 } }
               }}
-              value={msg}
-              required
-              className='text-form resize-none mt-4 overflow-y-hidden'
+              type='submit'
+              value='Send Message'
+              className='contact-btn'
             />
           </motion.form>
-          or support email:{" "}
-          <a
-            href='mailto:VR@shop-void.com'
-            className='underline hover:no-underline'
-          >
-            VR@shop-void.com
-          </a>
+          <span className='flex items-center gap-2'>
+            <HiOutlineMail className='social-icons' />
+            <a
+              href='mailto:VR@shop-void.com'
+              className='underline hover:no-underline'
+            >
+              VR@shop-void.com
+            </a>
+          </span>
         </div>
       </motion.div>
     </>
