@@ -1,18 +1,10 @@
-import { useLoader } from "@react-three/fiber";
+import { useGLTF } from "@react-three/drei";
 import { useEffect } from "react";
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 
 const Eye = (props: any) => {
-  const gtlf = useLoader(GLTFLoader, "models/sharingan/scene.gtlf");
-  useEffect(() => {
-    gtlf.scene.scale.set(0.005, 0.005, 0.005);
-    gtlf.scene.position.set(0, 0, 0);
-    gtlf.scene.traverse((object) => {
-      object.castShadow = true;
-      object.receiveShadow = true;
-    });
-  }, [gtlf]);
-  return <primitive object={gtlf.scene} {...props} />;
+  const { scene } = useGLTF("/models/sharingan/scene.gltf");
+
+  return <primitive object={scene} {...props} />;
 };
 
 export default Eye;

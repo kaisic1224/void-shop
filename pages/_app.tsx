@@ -1,7 +1,7 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import Sidebar from "../components/Sidebar";
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -16,26 +16,27 @@ function MyApp({ Component, pageProps }: AppProps) {
         setOffset={setOffset}
         offset={offset}
       />
-
-      <motion.main
-        className={`bg-black-dull transition-transform ${
-          open ? `overflow-hidden` : ""
-        }`}
-        style={
-          open
-            ? {
-                scaleX: 0.95,
-                scaleY: 0.9,
-                marginLeft: "64px",
-                borderRadius: "1rem"
-              }
-            : {
-                transitionDuration: ".3s"
-              }
-        }
-      >
-        <Component {...pageProps} />
-      </motion.main>
+      <Suspense fallback={null}>
+        <motion.main
+          className={`bg-black-dull transition-transform ${
+            open ? `overflow-hidden` : ""
+          }`}
+          style={
+            open
+              ? {
+                  scaleX: 0.95,
+                  scaleY: 0.9,
+                  marginLeft: "64px",
+                  borderRadius: "1rem"
+                }
+              : {
+                  transitionDuration: ".3s"
+                }
+          }
+        >
+          <Component {...pageProps} />
+        </motion.main>
+      </Suspense>
     </>
   );
 }

@@ -1,7 +1,7 @@
 import { Float, MeshReflectorMaterial, OrbitControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { HiOutlineMail } from "react-icons/hi";
 
 export const fadeinUp = {
@@ -37,25 +37,13 @@ const Contact = () => {
   const [invalid, setInvalid] = useState(false);
   const [eInvalid, seteInvalid] = useState(false);
 
-  const sendEmail = () => {};
+  const sendEmail = () => {
+    alert("ja");
+  };
   return (
     <>
       <motion.div id='contact' className='grid grid-cols-2'>
-        <div>
-          <Canvas>
-            <ambientLight intensity={0.5} />
-            <directionalLight
-              position={[10, 10, 15]}
-              color='lightblue'
-              intensity={1}
-            />
-            <OrbitControls />
-            <Float>
-              <Scumbag position={[1, 1, -2]} />
-            </Float>
-            <Plane />
-          </Canvas>
-        </div>
+        <div></div>
         <div>
           <motion.h2
             initial={{ y: 100, opacity: 0 }}
@@ -74,14 +62,8 @@ const Contact = () => {
             className='flex flex-col mt-2'
             onSubmit={(e) => {
               e.preventDefault();
-              if (name.length === 0 || email.length === 0 || msg.length === 0) {
-                setInvalid(true);
-                seteInvalid(true);
-              } else {
-                setInvalid(false);
-                seteInvalid(false);
-                sendEmail();
-              }
+              setInvalid(false);
+              sendEmail();
             }}
           >
             <div className='flex gap-4 w-full'>
@@ -99,25 +81,25 @@ const Contact = () => {
                   placeholder='Email'
                   onChange={(e) => {
                     setEmail(e.target.value);
-                    if (e.target.checkValidity()) {
-                      seteInvalid(false);
-                    } else {
+                    if (
+                      /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g.test(email) === false
+                    )
                       seteInvalid(true);
-                    }
                   }}
                   value={email}
                   type='email'
-                  title='your@email.com'
-                  pattern='[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2, 4}$'
-                  className='text-form peer'
+                  required
+                  autoComplete='off'
+                  title='Please fill out this field'
+                  className='text-form'
                   onInvalid={(e) => {
                     e.preventDefault();
-                    seteInvalid(true);
                     setInvalid(true);
+                    seteInvalid(true);
                   }}
                 />
-                {invalid === true && eInvalid === true && (
-                  <span className={`text-red-accent `}>
+                {invalid && (
+                  <span className={`text-red-accent ${!eInvalid && "hidden"}`}>
                     Must be a valid email
                   </span>
                 )}
@@ -132,13 +114,17 @@ const Contact = () => {
                   e.target.style.height = e.target.scrollHeight + "px";
                 }}
                 value={msg}
-                className='text-form resize-none mt-4 overflow-y-hidden peer'
+                required
+                title='Please fill out this field'
+                className='text-form resize-none mt-4 overflow-y-hidden'
+                onInvalid={(e) => {
+                  e.preventDefault();
+                  setInvalid(true);
+                }}
               />
               {invalid && (
                 <span
-                  className={`text-red-accent peer-focus:hidden ${
-                    msg.length != 0 && "hidden"
-                  }`}
+                  className={`text-red-accent ${msg.length != 0 && "hidden"}`}
                 >
                   Message field <strong>cannot</strong> be left blank
                 </span>

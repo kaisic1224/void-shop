@@ -58,7 +58,9 @@ const Home: NextPage = () => {
 
       <section className='px-8 min-h-screen flex items-center justify-center'>
         <div className='grid grid-cols-2 items-center'>
-          <LandingTitle />
+          <div style={{ width: "100%", height: "100%" }}>
+            <LandingTitle />
+          </div>
           <h1>VØID REINCARNATION</h1>
         </div>
       </section>
@@ -97,6 +99,7 @@ const Home: NextPage = () => {
           >
             {socials.map((social) => (
               <motion.li
+                key={social.href}
                 variants={{
                   hidden: { opacity: 0, y: 50 },
                   show: { opacity: 1, y: 0 }
@@ -105,10 +108,9 @@ const Home: NextPage = () => {
               >
                 <a href={social.href} className='z-50' target='_blank'>
                   <motion.div
-                    key={social.href}
                     initial='hidden'
                     whileHover='show'
-                    className='relative rounded-full w-fit aspect-square isolate group'
+                    className='relative rounded-full w-fit aspect-square isolate'
                   >
                     <svg
                       className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10'

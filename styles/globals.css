@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .a {
-  color: #111111;
+  color: #c20d0d;
 }
 
 html {
@@ -28,10 +28,15 @@ html {
 
   .text-form {
     @apply bg-transparent transition-colors focus:outline-none border-b-2 border-b-black-base pb-1 focus:border-b-red-dull
-    focus:placeholder:text-transparent;
+    focus:placeholder:text-transparent w-full;
   }
 
   .social-icons {
-    @apply w-6 h-6 group-hover:opacity-[85%];
+    @apply w-6 h-6;
+  }
+
+  .contact-btn {
+    @apply cursor-pointer font-bold text-lg leading-5 uppercase tracking-wider bg-[#c20d0d] hover:bg-red-dull mt-6
+              py-[1em] rounded-md;
   }
 }

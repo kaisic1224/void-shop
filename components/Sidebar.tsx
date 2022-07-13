@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { Dispatch, memo, SetStateAction, useRef, useState } from "react";
 import { BsFillHouseDoorFill } from "react-icons/bs";
-import { FaTshirt } from "react-icons/fa";
+import { FaShoppingCart, FaTshirt } from "react-icons/fa";
 import { MdMail } from "react-icons/md";
 
 const navigation = [
@@ -24,6 +24,11 @@ const navigation = [
     name: "Contact",
     path: "/#contact",
     component: <MdMail className={`nav-icon group-hover:opacity-80`} />
+  },
+  {
+    name: "Cart",
+    path: "/cart",
+    component: <FaShoppingCart className='nav-icon group-hover:opacity-80' />
   }
 ];
 
@@ -67,7 +72,6 @@ const Sidebar = ({
           initial='hidden'
           animate='show'
           whileTap='hidden'
-          whileHover='hover'
           onTapStart={() => {
             setOffset(window.scrollY);
             setOpen(!open);

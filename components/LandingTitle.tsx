@@ -5,20 +5,31 @@ import {
   ScrollControls,
   Scroll,
   MeshReflectorMaterial,
-  Stars
+  Stars,
+  Capsule
 } from "@react-three/drei";
 
 const LandingTitle = () => {
   return (
-    <Canvas>
+    <Canvas shadows dpr={[1, 2]}>
       <ambientLight intensity={0.5} />
       <OrbitControls />
-      <Stars count={5000} radius={1} depth={2} />
+      <Stars
+        radius={100}
+        depth={50}
+        count={5000}
+        factor={4}
+        saturation={0}
+        fade
+        speed={1}
+      />
+
+      <fog attach='fog' args={["white", 5, 15]} />
       <pointLight position={[10, 5, 15]} color='yellow' />
       <directionalLight position={[-2, 0, 4]} color='hotpink' />
-      <mesh position={[0, 0, -4]}>
-        <icosahedronBufferGeometry args={[2, 0]} />
-        <MeshReflectorMaterial mirror={1} attach='material' />
+      <mesh position={[0, 2, -4]}>
+        <ringBufferGeometry />
+        <meshStandardMaterial color='limegreen' />
       </mesh>
       <Grid />
     </Canvas>
